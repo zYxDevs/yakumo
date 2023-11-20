@@ -20,6 +20,7 @@
 import os
 import re
 import json
+import shutil
 import asyncio
 import aiohttp
 import aiohttp_socks
@@ -36,13 +37,17 @@ async def check_proxy(type, proxy):
         connector = aiohttp_socks.ProxyConnector.from_url(f"{type}://{proxy}")
         async with aiohttp.ClientSession(connector=connector, timeout=timeout) as session:
             try:
-                async with session.get("https://httpbin.org/ip") as response:
+                async with session.get("https://ipinfo.io/json") as response:
                     try:
                         result = await response.json()
                         ip = re.findall(r'\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b', proxy)
-                        if result['origin'] == ip[0]:
+                        if result['ip'] == ip[0]:
                             print(f'{GREEN}[+]{CLEAR} {proxy} is {GREEN}live{CLEAR}')
-                            with open(f'results/{type}/{type}_checked.txt', 'a') as f:
+                            country_dir = f'results/{type}/country/{result["country"]}'
+                            os.makedirs(country_dir, exist_ok=True)
+                            with open(f'{country_dir}/{type}_{result["country"].lower()}_checked.txt', 'a') as f:
+                                f.write(proxy + '\n')
+                            with open(f'results/{type}/global/{type}_checked.txt', 'a') as f:
                                 f.write(proxy + '\n')
                         else:
                             print(f'{RED}[-]{CLEAR} {proxy} is {RED}dead{CLEAR}')
@@ -53,22 +58,17 @@ async def check_proxy(type, proxy):
             except:
                 print(f'{RED}[-]{CLEAR} {proxy} is {RED}dead{CLEAR}')
             finally:
-                rmold = Path(f'results/{type}/{type}.txt')
+                rmold = Path(f'results/{type}/global/{type}.txt')
                 if rmold.exists():
                     rmold.unlink()
     except:
         print(f'{RED}[-]{CLEAR} Invalid proxy format: {proxy}')
 
 async def checker(type):
-    with open(f"results/{type}/{type}.txt", "r") as f:
+    with open(f"results/{type}/global/{type}.txt", "r") as f:
         data = f.read().split("\n")
     data = [proxy for proxy in data if proxy]
     print(f'{YELLOW}[>]{CLEAR} {GREEN}{len(data)}{CLEAR} {type} proxies will be checked')
-
-    checked_file = Path(f'results/{type}/{type}_checked.txt')
-    if checked_file.exists():
-        checked_file.unlink()
-
     tasks = [check_proxy(type, i) for i in data]
     await asyncio.gather(*tasks)
 
@@ -119,14 +119,14 @@ async def main():
 
     if not os.path.exists('results'):
         os.makedirs('results')
+        print(f'{GREEN}[+]{CLEAR} created new results directory')
+    else:
+        shutil.rmtree('results')
+        print(f'{GREEN}[+]{CLEAR} deleted old results directory')
 
     for type, urls in sources.items():
-        if not os.path.exists(f'results/{type}'):
-            os.makedirs(f'results/{type}')
-
-        file = Path(f'results/{type}/{type}.txt')
-        if file.exists():
-            file.unlink()
+        if not os.path.exists(f'results/{type}/global'):
+            os.makedirs(f'results/{type}/global')
 
         results = await fetch_all(urls)
         proxies = set()
@@ -134,7 +134,7 @@ async def main():
         for result in results:
             if result:
                 proxies.update(result.splitlines())
-                with open(f'results/{type}/{type}.txt', 'a') as f:
+                with open(f'results/{type}/global/{type}.txt', 'a') as f:
                     for proxy in proxies:
                         f.write(proxy + '\n')
         await checker(type)
