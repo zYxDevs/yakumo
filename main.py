@@ -43,9 +43,9 @@ async def check_proxy(type, proxy):
                         ip = re.findall(r'\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b', proxy)
                         if result['ip'] == ip[0]:
                             print(f'{GREEN}[+]{CLEAR} {proxy} is {GREEN}live{CLEAR}')
-                            country_dir = f'results/{type}/country/{result["country"].lower()}'
+                            country_dir = f'results/{type}/country/{result["country"]}'
                             os.makedirs(country_dir, exist_ok=True)
-                            with open(f'{country_dir}/{type}_{result["country"].lower()}_checked.txt', 'a') as f:
+                            with open(f'{country_dir}/{type}_{result["country"]}_checked.txt', 'a') as f:
                                 f.write(proxy + '\n')
                             with open(f'results/{type}/global/{type}_checked.txt', 'a') as f:
                                 f.write(proxy + '\n')
