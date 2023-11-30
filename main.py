@@ -91,18 +91,22 @@ sources = {
     "http": [
         "https://raw.githubusercontent.com/mmpx12/proxy-list/master/https.txt",
         "https://raw.githubusercontent.com/monosans/proxy-list/main/proxies/http.txt",
-        "https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/http.txt"
+        "https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/http.txt",
+        "https://raw.githubusercontent.com/Zaeem20/FREE_PROXIES_LIST/master/https.txt",
+        "https://raw.githubusercontent.com/Zaeem20/FREE_PROXIES_LIST/master/http.txt"
     ],
     "socks4": [
         "https://raw.githubusercontent.com/mmpx12/proxy-list/master/socks4.txt",
         "https://raw.githubusercontent.com/monosans/proxy-list/main/proxies/socks4.txt",
-        "https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/socks4.txt"
+        "https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/socks4.txt",
+        "https://raw.githubusercontent.com/Zaeem20/FREE_PROXIES_LIST/master/socks4.txt"
     ],
     "socks5": [
         "https://raw.githubusercontent.com/mmpx12/proxy-list/master/socks5.txt",
         "https://raw.githubusercontent.com/monosans/proxy-list/main/proxies/socks5.txt",
         "https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/socks5.txt",
-        "https://raw.githubusercontent.com/hookzof/socks5_list/master/proxy.txt"
+        "https://raw.githubusercontent.com/hookzof/socks5_list/master/proxy.txt",
+        "https://raw.githubusercontent.com/Zaeem20/FREE_PROXIES_LIST/master/socks5.txt"
     ]
 }
 
