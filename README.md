@@ -10,15 +10,15 @@ Yakumo is a free proxy grabber + checker written in Python. The name Yakumo itse
 #### Results from all countries mixed together
 ### HTTP(S)
 ```
-curl -sSf "https://raw.githubusercontent.com/elliottophellia/yakumo/master/results/http/global/http_checked.txt" > http.txt
+curl -sSfL "https://go.rei.my.id/YakumoHTTP" > HTTP.txt
 ```
 ### SOCKS4
 ```
-curl -sSf "https://raw.githubusercontent.com/elliottophellia/yakumo/master/results/socks4/global/socks4_checked.txt" > socks4.txt
+curl -sSfL "https://go.rei.my.id/YakumoSOCKS4" > SOCKS4.txt
 ```
 ### SOCKS5
 ```
-curl -sSf "https://raw.githubusercontent.com/elliottophellia/yakumo/master/results/socks5/global/socks5_checked.txt" > socks5.txt
+curl -sSfL "https://go.rei.my.id/YakumoSOCKS5" > SOCKS5.txt
 ```
 ## Country specific results
 #### Replace {country} with country code of your choice based on [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements)
